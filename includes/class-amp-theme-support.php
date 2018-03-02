@@ -101,7 +101,7 @@ class AMP_Theme_Support {
 		if ( amp_is_canonical() ) {
 
 			// Redirect to canonical URL if the AMP URL was loaded, since canonical is now AMP.
-			if ( false !== get_query_var( AMP_QUERY_VAR, false ) ) { // Because is_amp_endpoint() now returns true if amp_is_canonical().
+			if ( false !== get_query_var( amp_get_slug(), false ) ) { // Because is_amp_endpoint() now returns true if amp_is_canonical().
 				wp_safe_redirect( self::get_current_canonical_url(), 302 ); // Temporary redirect because canonical may change in future.
 				exit;
 			}
@@ -585,10 +585,10 @@ class AMP_Theme_Support {
 		}
 
 		// Strip endpoint.
-		$url = preg_replace( ':/' . preg_quote( AMP_QUERY_VAR, ':' ) . '(?=/?(\?|#|$)):', '', $url );
+		$url = preg_replace( ':/' . preg_quote( amp_get_slug(), ':' ) . '(?=/?(\?|#|$)):', '', $url );
 
 		// Strip query var.
-		$url = remove_query_arg( AMP_QUERY_VAR, $url );
+		$url = remove_query_arg( amp_get_slug(), $url );
 
 		return $url;
 	}
